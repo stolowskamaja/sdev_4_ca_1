@@ -1,0 +1,50 @@
+@(employeeList: List[models.Employee], loggedInEmployee : models.Employee, employeeForm: Form[models.Employee])
+@import helper._
+
+@main("Employees", loggedInEmployee) {
+
+    <div class="container" align="center" style="padding-top: 3em">
+        <div class="table-responsive" >
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <!-- The header row-->
+                    <tr>
+                        <th>ID</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Department</th>
+                        <th>Projects</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for(emp<-employeeList) {
+                        <tr class="clickable-row" data-href="@routes.EmployeeController.employee(emp.getId)">
+                            <td>@emp.getId</td>
+                            <td>@emp.getRole</td>
+                            <td>@emp.getEmail</td>
+                            <td>@emp.getName</td>
+                            @if(emp.getAddress != null) {
+                                <td>@emp.getAddress.getAddress</td>
+                            } else {
+                                <td>Unknown</td>
+                            }
+                            @if(emp.getDepartment != null) {
+                                <td>@emp.getDepartment.getName</td>
+                            }
+                            <td>
+                            @for(project <- emp.getProjects) {
+                                @project.getName
+                            }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    </div>
+
+}

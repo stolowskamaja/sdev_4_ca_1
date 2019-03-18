@@ -1,0 +1,52 @@
+@(employeeForm: Form[models.Employee], loggedInEmployee: models.Employee, managedEmployee : models.Employee)
+@import helper._
+
+@main("Update Employee", loggedInEmployee) {
+
+    <div class="container">
+    @helper.form(action = controllers.routes.EmployeeController.updateEmployeeSubmit(managedEmployee.getId), 'class -> "form-horizontal",
+                            'role -> "form"){
+        @CSRF.formField
+
+
+        <div class="form-group">
+        @inputText(employeeForm("name"), '_label -> "Name",
+            'class -> "form-control input-xs", 'placeholder -> "Name", '_showConstraints -> false)
+        </div>
+
+        <div class="form-group">
+        @inputText(employeeForm("email"), '_label -> "Email",
+            'class -> "form-control input-xs", 'placeholder -> "Email", '_showConstraints -> false)
+        </div>
+
+        <div class="form-group">
+        @inputPassword(employeeForm("password"), '_label -> "Password",
+            'class -> "form-control input-xs", 'placeholder -> "Password", 'value -> managedEmployee.getPassword)
+        </div>
+
+        <div class="form-group">
+        @select(
+            employeeForm("department.id"),
+            options(Department.options),
+            '_label -> "Department",
+            '_showConstraints -> false, 'class -> "form-control"
+        )
+        </div>
+
+
+
+        <div class="form-group">
+            @inputText(employeeForm("id"), '_label -> "", 'hidden ->"hidden")
+        </div>
+
+
+        <div class="actions">
+            <input type="submit" value="Update" class="btn btn-primary">
+            <a href="@routes.EmployeeController.employee(managedEmployee.getId)">
+                <button type="button" class="btn btn-warning">Cancel</button>
+            </a>
+        </div>
+    }
+    </div>
+
+}

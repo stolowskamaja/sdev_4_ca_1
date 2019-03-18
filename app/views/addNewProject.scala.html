@@ -1,0 +1,32 @@
+@(projectForm: Form[models.Project], loggedInEmployee: models.Employee)
+@import helper._
+
+@main("Add Project", loggedInEmployee) {
+
+
+    @helper.form(action = controllers.routes.ProjectController.addProjectSubmit()){
+    @CSRF.formField
+
+
+
+    <div class="form-group">
+        @inputText(projectForm("name"), '_label -> "Name",
+        'class -> "form-control input-xs", 'placeholder -> "Name")
+    </div>
+
+    <div class="form-group">
+        @inputText(projectForm("description"), '_label -> "Description",
+        'class -> "form-control input-xs", 'placeholder -> "Description")
+    </div>
+
+    <div class="form-group">
+        @inputDate(projectForm("deadline"), '_label -> "Deadline",
+        'class -> "form-control input-xs")
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Add Project" class="btn btn-primary">
+    </div>
+
+    }
+}

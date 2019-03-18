@@ -1,0 +1,83 @@
+@(loggedInEmployee : models.Employee, managedEmployee : models.Employee, allProjects : List[models.Project])
+
+@import helper._
+
+@main("Employees", loggedInEmployee) {
+
+
+
+    <div class="container">
+
+        <div class="row well">
+            <div class="col-md-3">
+                <img class="img-responsive img-rounded" src="https://picsum.photos/200/200">
+            </div>
+            <div class="col md-9">
+                <h3>Name: @managedEmployee.getName</h3>
+                <h3>Email: @managedEmployee.getEmail</h3>
+                @if(managedEmployee.getDepartment != null) {
+                    <h3>Department: @managedEmployee.getDepartment.getName</h3>
+                }
+                @if(managedEmployee.getAddress != null) {
+                    <h3>Address: @managedEmployee.getAddress.getAddress</h3>
+                } else {
+                    <h3>Address: Unknown</h3>
+                }
+                @if(loggedInEmployee.getRole == "manager"){
+                    <p align="right">
+                        <a href="@routes.EmployeeController.updateEmployee(managedEmployee.getId)">
+                            <button class="btn btn-primary">Edit</button>
+                        </a>
+                    </p>
+                }
+            </div>
+        </div>
+
+        <div class="well" style="margin-top: 40px;">
+            <h1 align="center" >Assigned Projects</h1>
+            <div class="row" >
+            @for(project <- managedEmployee.getProjects) {
+                <div class="col-md-3 well assigned_project">
+                    <p>Name: @project.getName</p>
+                    <p>Description: @project.getDescription</p>
+                    <p>Created at: @project.getCreatedAtTime @project.getCreatedAtDate</p>
+                    <p>Deadline: @project.getDeadline</p>
+                    @if(loggedInEmployee.getRole == "manager"){
+                        <a href="@routes.EmployeeController.removeProject(project.getId, managedEmployee.getId)">
+                            <button class="btn btn-primary">Unassign</button>
+                        </a>
+                    }
+                </div>
+
+            }
+
+            </div>
+
+        </div>
+
+        <div class="well" style="margin-top: 40px;">
+            <h1 align="center" >Unassigned Projects</h1>
+            <div class="row" >
+            @for(project <- allProjects) {
+                @if(!managedEmployee.isAssignedTo(project)) {
+                    <div class="col-md-3 well unassigned_project">
+                        <p>Name: @project.getName</p>
+                        <p>Description: @project.getDescription</p>
+                        <p>Created at: @project.getCreatedAtTime @project.getCreatedAtDate</p>
+                        <p>Deadline: @project.getDeadline</p>
+                        @if(loggedInEmployee.getRole == "manager"){
+                            <a href="@routes.EmployeeController.addProject(project.getId, managedEmployee.getId)">
+                                <button class="btn btn-primary">Assign</button>
+                            </a>
+                        }
+                    </div>
+
+
+                }
+            }
+
+            </div>
+        </div>
+    </div>
+
+}

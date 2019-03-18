@@ -1,0 +1,31 @@
+@(loggedInEmployee : models.Employee, allProjects : List[models.Project])
+@import helper._
+
+@main("Projects", loggedInEmployee) {
+
+    <div class="well" style="margin-top: 40px;">
+        <h1 align="center" >All Projects</h1>
+        <div align="center">
+            <a href="@routes.ProjectController.addNewProject">
+                <button class="btn btn-primary">Create New Project</button>
+            </a>
+        </div>
+        <div class="row" >
+            @for(project <- allProjects) {
+            <div class="col-md-3 well neutral_project">
+                <p>Name: @project.getName</p>
+                <p>Description: @project.getDescription</p>
+                <p>Created at: @project.getCreatedAtTime @project.getCreatedAtDate</p>
+                <p>Deadline: @project.getDeadline</p>
+                <a href="@routes.ProjectController.deleteProject(project.getId)">
+                    <button class="btn btn-danger">Delete</button>
+                </a>
+            </div>
+
+            }
+
+        </div>
+
+    </div>
+
+}

@@ -1,0 +1,34 @@
+@(loginForm: Form[models.Login], employee: models.Employee)
+@import helper._
+
+@main("Log In", employee) {
+
+    @if(loginForm.hasGlobalErrors) {
+        <p class="alert alert-warning">
+        @for(e <- loginForm.globalErrors) {
+            @e.message<br/>
+        }
+        </p>
+    }
+
+    @helper.form(action = controllers.routes.LoginController.loginSubmit()){
+        @CSRF.formField
+
+
+
+    <div class="form-group">
+    @inputText(loginForm("email"), '_label -> "",
+    'class -> "form-control input-xs", 'placeholder -> "Email")
+    </div>
+
+    <div class="form-group">
+    @inputPassword(loginForm("password"), '_label -> "",
+    'class -> "form-control input-xs", 'placeholder -> "Password")
+
+    </div>
+    <div class="form-group">
+    <input type="submit" value="Sign In" class="btn btn-primary">
+    </div>
+
+    }
+}

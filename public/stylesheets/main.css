@@ -1,0 +1,41 @@
+/* add padding to top of the page so sticky navbar doesnt overlap content */
+body {
+    padding-top: 60px;
+}
+
+.assigned_project {
+    margin: 20px !important;
+    background-color: rgba(0, 255, 0, 0.3) !important;
+}
+
+.unassigned_project {
+    margin: 20px !important;
+    background-color: rgba(255, 0, 0, 0.3) !important;
+}
+
+.neutral_project {
+    margin: 20px !important;
+    background-color: rgba(189, 195, 199, 0.3) !important;
+}
+
+.clickable-row:hover {
+    background-color: lightgray;
+}
+
+#bg {
+    position: fixed;
+    top: -35%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+#bg img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
+}
